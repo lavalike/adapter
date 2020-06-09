@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.dimeno.adapter.callback.OnItemClickCallback;
 import com.dimeno.adapter.callback.OnItemLongClickCallback;
@@ -224,6 +225,11 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         this.mItemLongClickCallback = callback;
     }
 
+    /**
+     * let header or footer views have full width for grid layout manager
+     *
+     * @param recyclerView recyclerView
+     */
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -238,6 +244,22 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
                     return 1;
                 }
             });
+        }
+    }
+
+    /**
+     * let header or footer views have full width for staggered grid layout manager
+     *
+     * @param holder holder
+     */
+    @Override
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        if (isInnerPosition(holder.getLayoutPosition())) {
+            ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+            if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+                ((StaggeredGridLayoutManager.LayoutParams) layoutParams).setFullSpan(true);
+            }
         }
     }
 }
