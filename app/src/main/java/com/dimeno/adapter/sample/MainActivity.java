@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 int childCount = parent.getChildCount();
                 for (int i = 0; i < childCount; i++) {
                     View childAt = parent.getChildAt(i);
-                    if (childAt != null) {
+                    if (childAt != null && i < childCount - 1) {
                         int left = childAt.getLeft();
                         int right = childAt.getRight();
                         int top = childAt.getBottom();
@@ -55,7 +56,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(0, 0, 0, 1);
+                int position = parent.getChildAdapterPosition(view);
+                if (position == parent.getAdapter().getItemCount() - 1) {
+                    outRect.set(0, 0, 0, 0);
+                } else {
+                    outRect.set(0, 0, 0, 1);
+                }
             }
         });
         init();
@@ -81,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(itemView.getContext(), "long click -> name : " + entity.name + " age : " + entity.age, Toast.LENGTH_SHORT).show();
             }
         });
+        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, null));
+        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, null));
         mRecycler.setAdapter(mAdapter);
     }
 }

@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * BaseRecyclerViewHolder
+ * recycler view holder
  * Created by wangzhen on 2020/6/9.
  */
 public abstract class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
@@ -16,10 +16,18 @@ public abstract class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
+    /**
+     * set data and call bind()
+     *
+     * @param data data
+     */
     public void setData(T data) {
         this.mData = data;
         bind();
     }
 
+    /**
+     * bind data¬
+     */
     public abstract void bind();
 }
