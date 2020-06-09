@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecycler = findViewById(R.id.recycler);
+
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.parseColor("#33888888"));
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             list.add(new UserEntity("张三", i + 1));
         }
-        mAdapter = new UserAdapter(null);
+        mAdapter = new UserAdapter(list);
         mAdapter.setOnClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(View itemView, int position) {

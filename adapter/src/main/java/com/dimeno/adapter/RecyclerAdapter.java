@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dimeno.adapter.callback.OnItemClickCallback;
@@ -221,5 +222,22 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      */
     public void setOnLongClickCallback(OnItemLongClickCallback callback) {
         this.mItemLongClickCallback = callback;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
+            final GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
+            manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (isInnerPosition(position)) {
+                        return manager.getSpanCount();
+                    }
+                    return 1;
+                }
+            });
+        }
     }
 }
