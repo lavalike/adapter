@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dimeno.adapter.callback.OnItemClickCallback;
-import com.dimeno.adapter.callback.OnItemLongClickCallback;
 import com.dimeno.adapter.sample.adapter.UserAdapter;
 import com.dimeno.adapter.sample.entity.UserEntity;
 
@@ -72,23 +71,25 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             list.add(new UserEntity("张三", i + 1));
         }
-        mAdapter = new UserAdapter(list);
+        mAdapter = new UserAdapter(null);
         mAdapter.setOnClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(View itemView, int position) {
                 UserEntity entity = mAdapter.getDatas().get(position);
-                Toast.makeText(itemView.getContext(), "click -> name : " + entity.name + " age : " + entity.age, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "name = " + entity.name + " age = " + entity.age, Toast.LENGTH_SHORT).show();
             }
         });
-        mAdapter.setOnLongClickCallback(new OnItemLongClickCallback() {
-            @Override
-            public void onItemLongClick(View itemView, int position) {
-                UserEntity entity = mAdapter.getDatas().get(position);
-                Toast.makeText(itemView.getContext(), "long click -> name : " + entity.name + " age : " + entity.age, Toast.LENGTH_SHORT).show();
-            }
-        });
-        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, null));
-        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, null));
+
+        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
+        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, mRecycler, false));
+        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
+
+        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
+        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, mRecycler, false));
+        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
+
+        mAdapter.setEmpty(LayoutInflater.from(this).inflate(R.layout.item_empty_layout, mRecycler, false));
+
         mRecycler.setAdapter(mAdapter);
     }
 }

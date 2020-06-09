@@ -20,11 +20,15 @@ import java.util.List;
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_HEADER = -20000; // [-20000, 0)
     private static final int VIEW_TYPE_FOOTER = -40000; // [-40001, -20000)
+    private static final int VIEW_TYPE_EMPTY = VIEW_TYPE_FOOTER - 1; // -40001
+
     private List<T> mDatas;
     private SparseArray<View> mHeaders = new SparseArray<>();
     private SparseArray<View> mFooters = new SparseArray<>();
+
     private OnItemClickCallback mItemClickCallback;
     private OnItemLongClickCallback mItemLongClickCallback;
+
     private int mHeaderIndex;
     private int mFooterIndex;
 
@@ -85,6 +89,15 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
+     * set empty view
+     *
+     * @param view view
+     */
+    public void setEmpty(View view) {
+        mFooters.put(VIEW_TYPE_EMPTY, view);
+    }
+
+    /**
      * whether the position is in region of both headers and footers
      *
      * @param position position
@@ -122,6 +135,11 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemCount() {
         int count = mDatas == null ? 0 : mDatas.size();
+        if (count > 0) {
+            if (mFooters.get(VIEW_TYPE_EMPTY) != null) {
+                mFooters.remove(VIEW_TYPE_EMPTY);
+            }
+        }
         return count + getHeadersCount() + getFootersCount();
     }
 
