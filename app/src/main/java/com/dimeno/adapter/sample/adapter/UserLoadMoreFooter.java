@@ -1,34 +1,35 @@
-package com.dimeno.adapter.footer;
+package com.dimeno.adapter.sample.adapter;
 
 import android.view.View;
 
-import com.dimeno.adapter.R;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
+import com.dimeno.adapter.footer.LoadMoreFooter;
 import com.dimeno.adapter.meta.LoadMoreState;
+import com.dimeno.adapter.sample.R;
 
 /**
- * LoadMoreFooterImpl
+ * UserLoadMoreFooter
  * Created by wangzhen on 2020/6/10.
  */
-public final class LoadMoreFooterImpl extends LoadMoreFooter implements View.OnClickListener {
+public class UserLoadMoreFooter extends LoadMoreFooter implements View.OnClickListener {
     private View mContainerLoading;
     private View mContainerNoMore;
     private View mContainerError;
 
-    public LoadMoreFooterImpl(OnLoadMoreCallback callback) {
+    public UserLoadMoreFooter(OnLoadMoreCallback callback) {
         super(callback);
     }
 
     @Override
     public int layout() {
-        return R.layout.item_load_more_layout;
+        return R.layout.user_load_more_layout;
     }
 
     @Override
     public void onViewCreated(View itemView) {
-        mContainerLoading = itemView.findViewById(R.id.container_loading);
-        mContainerNoMore = itemView.findViewById(R.id.container_no_more);
-        mContainerError = itemView.findViewById(R.id.container_error);
+        mContainerLoading = itemView.findViewById(com.dimeno.adapter.R.id.container_loading);
+        mContainerNoMore = itemView.findViewById(com.dimeno.adapter.R.id.container_no_more);
+        mContainerError = itemView.findViewById(com.dimeno.adapter.R.id.container_error);
         mContainerError.setOnClickListener(this);
     }
 
@@ -41,7 +42,7 @@ public final class LoadMoreFooterImpl extends LoadMoreFooter implements View.OnC
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.container_error) {
+        if (v.getId() == com.dimeno.adapter.R.id.container_error) {
             loadMore();
         }
     }

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dimeno.adapter.LoadRecyclerAdapter;
+import com.dimeno.adapter.footer.LoadMoreFooter;
 import com.dimeno.adapter.sample.entity.UserEntity;
 import com.dimeno.adapter.sample.holder.UserViewHolder;
 
@@ -20,6 +21,11 @@ public class UserAdapter extends LoadRecyclerAdapter<UserEntity> {
 
     public UserAdapter(List<UserEntity> list, ViewGroup parent) {
         super(list, parent);
+    }
+
+    @Override
+    protected LoadMoreFooter createLoadMoreFooter() {
+        return new UserLoadMoreFooter(this);
     }
 
     @Override
