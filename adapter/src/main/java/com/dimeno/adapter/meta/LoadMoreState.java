@@ -10,13 +10,15 @@ import java.lang.annotation.RetentionPolicy;
  * Created by wangzhen on 2020/6/10.
  */
 @IntDef(flag = true, value = {
+        LoadMoreState.READY,
         LoadMoreState.LOADING,
         LoadMoreState.NO_MORE,
         LoadMoreState.ERROR
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface LoadMoreState {
-    int LOADING = 0;
-    int NO_MORE = 1;
-    int ERROR = 2;
+    int READY = 0;
+    int LOADING = 1;
+    int NO_MORE = 2;
+    int ERROR = 3;
 }

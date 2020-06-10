@@ -33,11 +33,10 @@ public class LoadMoreFooterImpl extends LoadMoreFooter implements View.OnClickLi
     }
 
     @Override
-    public void setState(int state) {
-        mState = state;
-        mContainerLoading.setVisibility(mState == LoadMoreState.LOADING ? View.VISIBLE : View.GONE);
-        mContainerNoMore.setVisibility(mState == LoadMoreState.NO_MORE ? View.VISIBLE : View.GONE);
-        mContainerError.setVisibility(mState == LoadMoreState.ERROR ? View.VISIBLE : View.GONE);
+    public void onStateChange(int state) {
+        mContainerLoading.setVisibility(state == LoadMoreState.LOADING ? View.VISIBLE : View.GONE);
+        mContainerNoMore.setVisibility(state == LoadMoreState.NO_MORE ? View.VISIBLE : View.GONE);
+        mContainerError.setVisibility(state == LoadMoreState.ERROR ? View.VISIBLE : View.GONE);
     }
 
     @Override

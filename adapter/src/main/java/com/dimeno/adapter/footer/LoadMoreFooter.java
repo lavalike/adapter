@@ -12,8 +12,9 @@ import com.dimeno.adapter.meta.LoadMoreState;
  * Created by wangzhen on 2020/6/10.
  */
 public abstract class LoadMoreFooter implements View.OnAttachStateChangeListener {
-    protected OnLoadMoreCallback mCallback;
-    protected int mState = LoadMoreState.LOADING;
+    private OnLoadMoreCallback mCallback;
+    private int mState = LoadMoreState.READY;
+    private boolean isReady = true;
 
     public LoadMoreFooter(OnLoadMoreCallback callback) {
         this.mCallback = callback;
@@ -47,24 +48,54 @@ public abstract class LoadMoreFooter implements View.OnAttachStateChangeListener
     public abstract void onViewCreated(View itemView);
 
     /**
-     * update load more state
+     * update state here
      *
      * @param state state
      */
-    public abstract void setState(@LoadMoreState int state);
+    public abstract void onStateChange(@LoadMoreState int state);
 
     @Override
     public void onViewAttachedToWindow(View v) {
-        if (mState == LoadMoreState.LOADING) {
+        if (isReady) {
             loadMore();
         }
     }
 
+    /**
+     * execute load more
+     */
     protected void loadMore() {
         setState(LoadMoreState.LOADING);
         if (mCallback != null) {
             mCallback.onLoadMore();
         }
+    }
+
+    /**
+     * get load more state
+     *
+     * @return state
+     */
+    public int getState() {
+        return mState;
+    }
+
+    /**
+     * set load more state
+     *
+     * @param state state
+     */
+    public void setState(@LoadMoreState int state) {
+        mState = state;
+        isReady = (mState == LoadMoreState.READY);
+        onStateChange(mState);
+    }
+
+    /**
+     * be ready to load more
+     */
+    public void setReady() {
+        isReady = true;
     }
 
     @Override

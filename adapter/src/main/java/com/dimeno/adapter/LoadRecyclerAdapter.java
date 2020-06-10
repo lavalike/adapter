@@ -32,6 +32,18 @@ public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implemen
         return new LoadMoreFooterImpl(this);
     }
 
+    @Override
+    public void setData(List<T> list) {
+        super.setData(list);
+        mLoadMoreFooter.setReady();
+    }
+
+    @Override
+    public void addData(List<T> list) {
+        super.addData(list);
+        mLoadMoreFooter.setReady();
+    }
+
     /**
      * set load more view
      *
