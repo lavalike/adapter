@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dimeno.adapter.callback.OnItemClickCallback;
 import com.dimeno.adapter.sample.adapter.UserAdapter;
 import com.dimeno.adapter.sample.entity.UserEntity;
+import com.dimeno.adapter.sample.holder.EmptyHolder;
+import com.dimeno.adapter.sample.holder.FooterHolder;
+import com.dimeno.adapter.sample.holder.HeaderHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "name = " + entity.name + " age = " + entity.age, Toast.LENGTH_SHORT).show();
             }
         });
-        mAdapter.setEmpty(LayoutInflater.from(this).inflate(R.layout.item_empty_layout, mRecycler, false));
+        mAdapter.setEmpty(new EmptyHolder().onCreateView(mRecycler));
 
-        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
-        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, mRecycler, false));
-        mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
+        mAdapter.addHeader(new HeaderHolder().onCreateView(mRecycler));
+        mAdapter.addHeader(new FooterHolder().onCreateView(mRecycler));
+        mAdapter.addHeader(new HeaderHolder().onCreateView(mRecycler));
 
         mRecycler.setAdapter(mAdapter);
     }

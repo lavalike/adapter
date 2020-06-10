@@ -195,10 +195,11 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         int position = getItemCount() - getFootersCount();
         if (mDatas == null || mDatas.isEmpty()) {
             mDatas = list;
+            notifyDataSetChanged();
         } else {
             mDatas.addAll(list);
+            notifyItemRangeInserted(position, list.size());
         }
-        notifyItemRangeInserted(position, list.size());
     }
 
     /**

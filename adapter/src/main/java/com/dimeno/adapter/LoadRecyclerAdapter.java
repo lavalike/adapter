@@ -3,10 +3,10 @@ package com.dimeno.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dimeno.adapter.annotation.LoadMoreState;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
 import com.dimeno.adapter.footer.LoadMoreFooter;
 import com.dimeno.adapter.footer.LoadMoreFooterImpl;
-import com.dimeno.adapter.annotation.LoadMoreState;
 
 import java.util.List;
 
@@ -30,6 +30,17 @@ public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implemen
      */
     protected LoadMoreFooter createLoadMoreFooter() {
         return new LoadMoreFooterImpl(this);
+    }
+
+    @Override
+    public int getItemCount() {
+        int count = getDatas() == null ? 0 : getDatas().size();
+        if (count == 0) {
+            if (mFooters.get(VIEW_TYPE_LOAD_MORE) != null) {
+                mFooters.remove(VIEW_TYPE_LOAD_MORE);
+            }
+        }
+        return super.getItemCount();
     }
 
     @Override
