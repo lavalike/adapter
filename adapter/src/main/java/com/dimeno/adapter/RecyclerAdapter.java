@@ -146,6 +146,17 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         return count + getHeadersCount() + getFootersCount();
     }
 
+    @Override
+    public long getItemId(int position) {
+        if (isHeaderPosition(position)) {
+            return mHeaders.keyAt(position);
+        }
+        if (isFooterPosition(position)) {
+            return mFooters.keyAt(getFootersCount() - (getItemCount() - position));
+        }
+        return super.getItemId(position);
+    }
+
     /**
      * headers count
      *
