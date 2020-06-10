@@ -16,17 +16,17 @@ import com.dimeno.adapter.holder.HeaderFooterViewHolder;
 import java.util.List;
 
 /**
- * recycler adapter
+ * recycler basic adapter
  * Created by wangzhen on 2020/6/9.
  */
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_HEADER = -20000; // [-20000, 0)
     private static final int VIEW_TYPE_FOOTER = -40000; // [-40001, -20000)
-    private static final int VIEW_TYPE_EMPTY = VIEW_TYPE_FOOTER - 1; // -40001
+    protected static final int VIEW_TYPE_EMPTY = VIEW_TYPE_FOOTER - 1; // -40001
 
     private List<T> mDatas;
     private SparseArray<View> mHeaders = new SparseArray<>();
-    private SparseArray<View> mFooters = new SparseArray<>();
+    protected SparseArray<View> mFooters = new SparseArray<>();
 
     private OnItemClickCallback mItemClickCallback;
     private OnItemLongClickCallback mItemLongClickCallback;
@@ -170,6 +170,34 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      */
     public List<T> getDatas() {
         return mDatas;
+    }
+
+    /**
+     * replace current data source
+     *
+     * @param list list
+     */
+    public void setData(List<T> list) {
+        this.mDatas = list;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * append data to source
+     *
+     * @param list list
+     */
+    public void addData(List<T> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        int position = getItemCount() - getFootersCount();
+        if (mDatas == null || mDatas.isEmpty()) {
+            mDatas = list;
+        } else {
+            mDatas.addAll(list);
+        }
+        notifyItemRangeInserted(position, list.size());
     }
 
     /**

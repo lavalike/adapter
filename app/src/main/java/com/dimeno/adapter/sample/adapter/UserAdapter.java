@@ -1,10 +1,12 @@
 package com.dimeno.adapter.sample.adapter;
 
+import android.os.Handler;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dimeno.adapter.RecyclerAdapter;
+import com.dimeno.adapter.LoadRecyclerAdapter;
+import com.dimeno.adapter.meta.LoadMoreState;
 import com.dimeno.adapter.sample.entity.UserEntity;
 import com.dimeno.adapter.sample.holder.UserViewHolder;
 
@@ -14,14 +16,24 @@ import java.util.List;
  * UserAdapter
  * Created by wangzhen on 2020/6/9.
  */
-public class UserAdapter extends RecyclerAdapter<UserEntity> {
+public class UserAdapter extends LoadRecyclerAdapter<UserEntity> {
 
-    public UserAdapter(List<UserEntity> list) {
-        super(list);
+    public UserAdapter(List<UserEntity> list, ViewGroup parent) {
+        super(list, parent);
     }
 
     @Override
     public RecyclerView.ViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         return new UserViewHolder(parent);
+    }
+
+    @Override
+    public void onLoadMore() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setState(LoadMoreState.ERROR);
+            }
+        }, 1000);
     }
 }

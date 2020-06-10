@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             list.add(new UserEntity("张三", i + 1));
         }
-        mAdapter = new UserAdapter(list);
+        mAdapter = new UserAdapter(list, mRecycler);
         mAdapter.setOnClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(View itemView, int position) {
@@ -80,16 +80,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "name = " + entity.name + " age = " + entity.age, Toast.LENGTH_SHORT).show();
             }
         });
+        mAdapter.setEmpty(LayoutInflater.from(this).inflate(R.layout.item_empty_layout, mRecycler, false));
 
         mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
         mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, mRecycler, false));
         mAdapter.addHeader(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
-
-        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
-        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_footer_layout, mRecycler, false));
-        mAdapter.addFooter(LayoutInflater.from(this).inflate(R.layout.item_header_layout, mRecycler, false));
-
-        mAdapter.setEmpty(LayoutInflater.from(this).inflate(R.layout.item_empty_layout, mRecycler, false));
 
         mRecycler.setAdapter(mAdapter);
     }
