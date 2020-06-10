@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
 import com.dimeno.adapter.footer.LoadMoreFooter;
+import com.dimeno.adapter.footer.LoadMoreFooterImpl;
 import com.dimeno.adapter.meta.LoadMoreState;
 
 import java.util.List;
@@ -15,12 +16,20 @@ import java.util.List;
  */
 public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implements OnLoadMoreCallback {
     private static final int VIEW_TYPE_LOAD_MORE = VIEW_TYPE_EMPTY - 1; // -40002
-    private final LoadMoreFooter mLoadMoreFooter;
+    private LoadMoreFooter mLoadMoreFooter;
 
     public LoadRecyclerAdapter(List<T> list, ViewGroup parent) {
         super(list);
-        mLoadMoreFooter = new LoadMoreFooter(this);
-        setLoadMore(mLoadMoreFooter.onCreateView(parent));
+        setLoadMore((mLoadMoreFooter = createLoadMoreFooter()).onCreateView(parent));
+    }
+
+    /**
+     * create a load more footer
+     *
+     * @return LoadMoreFooter
+     */
+    protected LoadMoreFooter createLoadMoreFooter() {
+        return new LoadMoreFooterImpl(this);
     }
 
     /**

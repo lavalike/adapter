@@ -4,38 +4,54 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dimeno.adapter.R;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
 import com.dimeno.adapter.meta.LoadMoreState;
 
 /**
- * LoadMoreFooter
+ * load more parent footer
  * Created by wangzhen on 2020/6/10.
  */
-public class LoadMoreFooter implements View.OnAttachStateChangeListener, View.OnClickListener {
-    private OnLoadMoreCallback mCallback;
-    private View mContainerLoading;
-    private View mContainerNoMore;
-    private int mState = LoadMoreState.LOADING;
-    private View mContainerError;
+public abstract class LoadMoreFooter implements View.OnAttachStateChangeListener {
+    protected OnLoadMoreCallback mCallback;
+    protected int mState = LoadMoreState.LOADING;
 
     public LoadMoreFooter(OnLoadMoreCallback callback) {
         this.mCallback = callback;
     }
 
+    /**
+     * init and return footer view
+     *
+     * @param parent parent
+     * @return view
+     */
     public View onCreateView(ViewGroup parent) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_load_more_layout, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(layout(), parent, false);
+        itemView.addOnAttachStateChangeListener(this);
         onViewCreated(itemView);
         return itemView;
     }
 
-    private void onViewCreated(View itemView) {
-        mContainerLoading = itemView.findViewById(R.id.container_loading);
-        mContainerNoMore = itemView.findViewById(R.id.container_no_more);
-        mContainerError = itemView.findViewById(R.id.container_error);
-        mContainerError.setOnClickListener(this);
-        itemView.addOnAttachStateChangeListener(this);
-    }
+    /**
+     * set footer layout res
+     *
+     * @return res id
+     */
+    public abstract int layout();
+
+    /**
+     * handle views here
+     *
+     * @param itemView item view
+     */
+    public abstract void onViewCreated(View itemView);
+
+    /**
+     * update load more state
+     *
+     * @param state state
+     */
+    public abstract void setState(@LoadMoreState int state);
 
     @Override
     public void onViewAttachedToWindow(View v) {
@@ -44,29 +60,15 @@ public class LoadMoreFooter implements View.OnAttachStateChangeListener, View.On
         }
     }
 
-    private void loadMore() {
+    protected void loadMore() {
         setState(LoadMoreState.LOADING);
         if (mCallback != null) {
             mCallback.onLoadMore();
         }
     }
 
-    public void setState(@LoadMoreState int state) {
-        mState = state;
-        mContainerLoading.setVisibility(mState == LoadMoreState.LOADING ? View.VISIBLE : View.GONE);
-        mContainerNoMore.setVisibility(mState == LoadMoreState.NO_MORE ? View.VISIBLE : View.GONE);
-        mContainerError.setVisibility(mState == LoadMoreState.ERROR ? View.VISIBLE : View.GONE);
-    }
-
     @Override
     public void onViewDetachedFromWindow(View v) {
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.container_error) {
-            loadMore();
-        }
     }
 }
