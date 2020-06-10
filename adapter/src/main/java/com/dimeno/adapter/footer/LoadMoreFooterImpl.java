@@ -3,8 +3,8 @@ package com.dimeno.adapter.footer;
 import android.view.View;
 
 import com.dimeno.adapter.R;
+import com.dimeno.adapter.annotation.LoadMoreState;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
-import com.dimeno.adapter.meta.LoadMoreState;
 
 /**
  * LoadMoreFooterImpl
@@ -25,7 +25,7 @@ public final class LoadMoreFooterImpl extends LoadMoreFooter implements View.OnC
     }
 
     @Override
-    public void onViewCreated(View itemView) {
+    public void onFooterViewCreated(View itemView) {
         mContainerLoading = itemView.findViewById(R.id.container_loading);
         mContainerNoMore = itemView.findViewById(R.id.container_no_more);
         mContainerError = itemView.findViewById(R.id.container_error);

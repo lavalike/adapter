@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
 import com.dimeno.adapter.footer.LoadMoreFooter;
 import com.dimeno.adapter.footer.LoadMoreFooterImpl;
-import com.dimeno.adapter.meta.LoadMoreState;
+import com.dimeno.adapter.annotation.LoadMoreState;
 
 import java.util.List;
 

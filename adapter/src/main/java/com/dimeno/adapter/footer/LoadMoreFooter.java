@@ -1,17 +1,16 @@
 package com.dimeno.adapter.footer;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.dimeno.adapter.base.RecyclerItem;
+import com.dimeno.adapter.annotation.LoadMoreState;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
-import com.dimeno.adapter.meta.LoadMoreState;
 
 /**
  * load more parent footer
  * Created by wangzhen on 2020/6/10.
  */
-public abstract class LoadMoreFooter implements View.OnAttachStateChangeListener {
+public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAttachStateChangeListener {
     private OnLoadMoreCallback mCallback;
     private int mState = LoadMoreState.READY;
     private boolean isReady = true;
@@ -20,32 +19,18 @@ public abstract class LoadMoreFooter implements View.OnAttachStateChangeListener
         this.mCallback = callback;
     }
 
-    /**
-     * init and return footer view
-     *
-     * @param parent parent
-     * @return view
-     */
-    public View onCreateView(ViewGroup parent) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(layout(), parent, false);
+    @Override
+    public void onViewCreated(View itemView) {
         itemView.addOnAttachStateChangeListener(this);
-        onViewCreated(itemView);
-        return itemView;
+        onFooterViewCreated(itemView);
     }
 
     /**
-     * set footer layout res
+     * handle footer views here
      *
-     * @return res id
+     * @param itemView itemView
      */
-    public abstract int layout();
-
-    /**
-     * handle views here
-     *
-     * @param itemView item view
-     */
-    public abstract void onViewCreated(View itemView);
+    public abstract void onFooterViewCreated(View itemView);
 
     /**
      * update state here

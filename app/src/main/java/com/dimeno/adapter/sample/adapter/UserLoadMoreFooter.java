@@ -2,9 +2,9 @@ package com.dimeno.adapter.sample.adapter;
 
 import android.view.View;
 
+import com.dimeno.adapter.annotation.LoadMoreState;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
 import com.dimeno.adapter.footer.LoadMoreFooter;
-import com.dimeno.adapter.meta.LoadMoreState;
 import com.dimeno.adapter.sample.R;
 
 /**
@@ -12,6 +12,7 @@ import com.dimeno.adapter.sample.R;
  * Created by wangzhen on 2020/6/10.
  */
 public class UserLoadMoreFooter extends LoadMoreFooter implements View.OnClickListener {
+
     private View mContainerLoading;
     private View mContainerNoMore;
     private View mContainerError;
@@ -26,7 +27,7 @@ public class UserLoadMoreFooter extends LoadMoreFooter implements View.OnClickLi
     }
 
     @Override
-    public void onViewCreated(View itemView) {
+    public void onFooterViewCreated(View itemView) {
         mContainerLoading = itemView.findViewById(com.dimeno.adapter.R.id.container_loading);
         mContainerNoMore = itemView.findViewById(com.dimeno.adapter.R.id.container_no_more);
         mContainerError = itemView.findViewById(com.dimeno.adapter.R.id.container_error);

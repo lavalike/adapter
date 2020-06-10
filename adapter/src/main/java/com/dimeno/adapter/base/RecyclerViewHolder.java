@@ -1,4 +1,4 @@
-package com.dimeno.adapter;
+package com.dimeno.adapter.base;
 
 import android.view.View;
 

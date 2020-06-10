@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.dimeno.adapter.base.RecyclerViewHolder;
 import com.dimeno.adapter.callback.OnItemClickCallback;
 import com.dimeno.adapter.callback.OnItemLongClickCallback;
 import com.dimeno.adapter.holder.HeaderFooterViewHolder;

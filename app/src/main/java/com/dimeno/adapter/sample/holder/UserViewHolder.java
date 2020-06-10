@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.dimeno.adapter.RecyclerViewHolder;
+import com.dimeno.adapter.base.RecyclerViewHolder;
 import com.dimeno.adapter.sample.R;
 import com.dimeno.adapter.sample.entity.UserEntity;
 

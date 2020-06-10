@@ -1,4 +1,4 @@
-package com.dimeno.adapter.meta;
+package com.dimeno.adapter.annotation;
 
 import androidx.annotation.IntDef;
 
