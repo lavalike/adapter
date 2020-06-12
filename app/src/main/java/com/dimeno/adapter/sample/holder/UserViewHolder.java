@@ -1,6 +1,5 @@
 package com.dimeno.adapter.sample.holder;
 
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -20,9 +19,9 @@ public class UserViewHolder extends RecyclerViewHolder<UserEntity> {
     private TextView mTvAge;
 
     public UserViewHolder(@NonNull ViewGroup parent) {
-        super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_layout, parent, false));
-        mTvName = itemView.findViewById(R.id.tv_name);
-        mTvAge = itemView.findViewById(R.id.tv_age);
+        super(parent, R.layout.item_user_layout);
+        mTvName = findViewById(R.id.tv_name);
+        mTvAge = findViewById(R.id.tv_age);
     }
 
     @Override
