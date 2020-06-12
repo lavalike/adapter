@@ -25,7 +25,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     private static final int VIEW_TYPE_FOOTER = -40000; // [-40001, -20000)
     protected static final int VIEW_TYPE_EMPTY = VIEW_TYPE_FOOTER - 1; // -40001
 
-    private List<T> mDatas;
+    protected List<T> mDatas;
     private SparseArray<View> mHeaders = new SparseArray<>();
     protected SparseArray<View> mFooters = new SparseArray<>();
 
@@ -40,19 +40,23 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public final int getItemViewType(int position) {
         if (isHeaderPosition(position)) {
             return mHeaders.keyAt(position);
         }
         if (isFooterPosition(position)) {
             return mFooters.keyAt(getFootersCount() - (getItemCount() - position));
         }
+        return getAbsItemViewType(position);
+    }
+
+    protected int getAbsItemViewType(int position) {
         return super.getItemViewType(position);
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public final RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (mHeaders.get(viewType) != null) {
             return new HeaderFooterViewHolder(mHeaders.get(viewType));
         }
