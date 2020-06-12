@@ -34,6 +34,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
 
     private int mHeaderIndex;
     private int mFooterIndex;
+    private View mEmptyView;
 
     public RecyclerAdapter(List<T> list) {
         this.mDatas = list;
@@ -101,7 +102,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * @param view view
      */
     public void setEmpty(View view) {
-        mFooters.put(VIEW_TYPE_EMPTY, view);
+        mEmptyView = view;
     }
 
     /**
@@ -145,6 +146,10 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         if (count > 0) {
             if (mFooters.get(VIEW_TYPE_EMPTY) != null) {
                 mFooters.remove(VIEW_TYPE_EMPTY);
+            }
+        } else {
+            if (mEmptyView != null && mFooters.get(VIEW_TYPE_EMPTY) == null) {
+                mFooters.put(VIEW_TYPE_EMPTY, mEmptyView);
             }
         }
         return count + getHeadersCount() + getFootersCount();

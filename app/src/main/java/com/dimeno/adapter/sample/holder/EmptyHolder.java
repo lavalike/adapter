@@ -1,9 +1,9 @@
 package com.dimeno.adapter.sample.holder;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.dimeno.adapter.base.RecyclerItem;
+import com.dimeno.adapter.sample.MainActivity;
 import com.dimeno.adapter.sample.R;
 
 /**
@@ -21,7 +21,9 @@ public class EmptyHolder extends RecyclerItem {
         itemView.findViewById(R.id.btn_retry).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "刷新", Toast.LENGTH_SHORT).show();
+                if (v.getContext() instanceof MainActivity) {
+                    ((MainActivity) v.getContext()).init();
+                }
             }
         });
     }

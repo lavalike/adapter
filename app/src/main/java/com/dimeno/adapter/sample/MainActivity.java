@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
-    private void init() {
+    public void init() {
         List<UserEntity> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             list.add(new UserEntity("张三", i + 1));
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setOnClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(View itemView, int position) {
-                UserEntity entity = mAdapter.getDatas().get(position);
-                Toast.makeText(MainActivity.this, "name = " + entity.name + " age = " + entity.age, Toast.LENGTH_SHORT).show();
+                mAdapter.getDatas().remove(position);
+                mAdapter.notifyItemRemoved(position + mAdapter.getHeadersCount());
             }
         });
         mAdapter.setEmpty(new EmptyHolder().onCreateView(mRecycler));
