@@ -48,7 +48,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         if (isFooterPosition(position)) {
             return mFooters.keyAt(getFootersCount() - (getItemCount() - position));
         }
-        return getAbsItemViewType(position);
+        return getAbsItemViewType(compatPosition(position));
     }
 
     protected int getAbsItemViewType(int position) {
