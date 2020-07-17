@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void init() {
         List<UserEntity> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 1; i++) {
             list.add(new UserEntity("张三", i + 1));
         }
         mAdapter = new UserAdapter(list, mRecycler);

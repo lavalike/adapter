@@ -1,9 +1,10 @@
 package com.dimeno.adapter.footer;
 
+import android.util.Log;
 import android.view.View;
 
-import com.dimeno.adapter.base.RecyclerItem;
 import com.dimeno.adapter.annotation.LoadMoreState;
+import com.dimeno.adapter.base.RecyclerItem;
 import com.dimeno.adapter.callback.OnLoadMoreCallback;
 
 /**
@@ -14,6 +15,7 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
     private OnLoadMoreCallback mCallback;
     private int mState = LoadMoreState.READY;
     private boolean isReady = true;
+    private View itemView;
 
     public LoadMoreFooter(OnLoadMoreCallback callback) {
         this.mCallback = callback;
@@ -21,7 +23,8 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
 
     @Override
     public void onViewCreated(View itemView) {
-        itemView.addOnAttachStateChangeListener(this);
+        this.itemView = itemView;
+        this.itemView.addOnAttachStateChangeListener(this);
         onFooterViewCreated(itemView);
     }
 
@@ -81,10 +84,19 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
      */
     public void setReady() {
         isReady = true;
+        itemView.removeCallbacks(mRunnable);
+        itemView.postDelayed(mRunnable, 500);
     }
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadMore();
+        }
+    };
 
     @Override
     public void onViewDetachedFromWindow(View v) {
-
+        itemView.removeCallbacks(mRunnable);
     }
 }

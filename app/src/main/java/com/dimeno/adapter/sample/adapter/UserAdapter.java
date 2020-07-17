@@ -11,6 +11,7 @@ import com.dimeno.adapter.footer.LoadMoreFooter;
 import com.dimeno.adapter.sample.entity.UserEntity;
 import com.dimeno.adapter.sample.holder.UserViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,13 +39,16 @@ public class UserAdapter extends LoadRecyclerAdapter<UserEntity> {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                setState(LoadMoreState.ERROR);
-//                List<UserEntity> list = new ArrayList<>();
-//                for (int i = 0; i < 10; i++) {
-//                    list.add(new UserEntity("李四", i + 1));
-//                }
-//                addData(list);
+                if (mDatas.size() < 15) {
+                    List<UserEntity> list = new ArrayList<>();
+                    for (int i = 0; i < 1; i++) {
+                        list.add(new UserEntity("李四", mDatas.size() + 1));
+                    }
+                    addData(list);
+                } else {
+                    setState(LoadMoreState.NO_MORE);
+                }
             }
-        }, 500);
+        }, 100);
     }
 }
