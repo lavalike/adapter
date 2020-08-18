@@ -284,16 +284,32 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
-            final GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
-            manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    if (isInnerPosition(position)) {
-                        return manager.getSpanCount();
-                    }
-                    return 1;
-                }
-            });
+            GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
+            manager.setSpanSizeLookup(new SpanSizeLookupWrapper(manager.getSpanCount(), manager.getSpanSizeLookup()));
+        }
+    }
+
+    /**
+     * wrapper class to handle span size
+     */
+    private class SpanSizeLookupWrapper extends GridLayoutManager.SpanSizeLookup {
+        private int spanCount;
+        private GridLayoutManager.SpanSizeLookup spanSizeLookup;
+
+        public SpanSizeLookupWrapper(int spanCount, GridLayoutManager.SpanSizeLookup spanSizeLookup) {
+            this.spanCount = spanCount;
+            this.spanSizeLookup = spanSizeLookup;
+        }
+
+        @Override
+        public int getSpanSize(int position) {
+            if (isInnerPosition(position)) {
+                return spanCount;
+            }
+            if (spanSizeLookup != null) {
+                return spanSizeLookup.getSpanSize(position);
+            }
+            return 1;
         }
     }
 
