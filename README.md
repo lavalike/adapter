@@ -4,6 +4,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Android-00CC00.svg?style=flat)](https://www.android.com)
 [![](https://jitpack.io/v/dimeno-tech/dimeno-adapter.svg)](https://jitpack.io/#dimeno-tech/dimeno-adapter)
 ### Adapter
+
 添加Header
 
 ``` java
@@ -136,7 +137,8 @@ protected LoadMoreFooter createLoadMoreFooter() {
     return new Footer(this);
 }
 ```
-默认实现类
+
+自定义Footer实现
 
 ``` java
 public class Footer extends LoadMoreFooter {
@@ -181,5 +183,37 @@ public class ViewHolder extends RecyclerViewHolder<T> {
     public void bind() {
         
     }
+}
+```
+
+同时兼容Adapter和ViewHolder点击/长按事件
+
+ViewHolder实现OnHolderClickCallback / OnHolderLongClickCallback接口，重写相关方法即可
+
+源码逻辑
+
+``` java
+if (mItemClickCallback != null || holder instanceof OnHolderClickCallback) {
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mItemClickCallback != null)
+                mItemClickCallback.onItemClick(v, compatPosition(holder.getLayoutPosition()));
+            if (holder instanceof OnHolderClickCallback)
+                ((OnHolderClickCallback) holder).onItemClick(v, compatPosition(holder.getLayoutPosition()));
+        }
+    });
+}
+if (mItemLongClickCallback != null || holder instanceof OnHolderLongClickCallback) {
+    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            if (mItemLongClickCallback != null)
+                mItemLongClickCallback.onItemLongClick(v, compatPosition(holder.getLayoutPosition()));
+            if (holder instanceof OnHolderLongClickCallback)
+                ((OnHolderLongClickCallback) holder).onItemLongClick(v, compatPosition(holder.getLayoutPosition()));
+            return false;
+        }
+    });
 }
 ```

@@ -3,9 +3,9 @@ package com.dimeno.adapter.callback;
 import android.view.View;
 
 /**
- * OnItemLongClickCallback for adapter
- * Created by wangzhen on 2020/6/9.
+ * OnHolderLongClickCallback for view holder
+ * Created by wangzhen on 2020/8/18.
  */
-public interface OnItemLongClickCallback {
+public interface OnHolderLongClickCallback {
     void onItemLongClick(View itemView, int position);
 }

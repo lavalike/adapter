@@ -3,9 +3,9 @@ package com.dimeno.adapter.callback;
 import android.view.View;
 
 /**
- * ItemClickCallback for adapter
- * Created by wangzhen on 2020/6/9.
+ * OnHolderClickCallback for view holder
+ * Created by wangzhen on 2020/8/18.
  */
-public interface OnItemClickCallback {
+public interface OnHolderClickCallback {
     void onItemClick(View itemView, int position);
 }

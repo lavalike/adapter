@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.dimeno.adapter.base.RecyclerViewHolder;
+import com.dimeno.adapter.callback.OnHolderClickCallback;
+import com.dimeno.adapter.callback.OnHolderLongClickCallback;
 import com.dimeno.adapter.callback.OnItemClickCallback;
 import com.dimeno.adapter.callback.OnItemLongClickCallback;
 import com.dimeno.adapter.holder.HeaderFooterViewHolder;
@@ -238,23 +240,29 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * @param holder view holder
      */
     private void setItemEvent(final RecyclerView.ViewHolder holder) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mItemClickCallback != null) {
-                    mItemClickCallback.onItemClick(v, compatPosition(holder.getLayoutPosition()));
+        if (mItemClickCallback != null || holder instanceof OnHolderClickCallback) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemClickCallback != null)
+                        mItemClickCallback.onItemClick(v, compatPosition(holder.getLayoutPosition()));
+                    if (holder instanceof OnHolderClickCallback)
+                        ((OnHolderClickCallback) holder).onItemClick(v, compatPosition(holder.getLayoutPosition()));
                 }
-            }
-        });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (mItemLongClickCallback != null) {
-                    mItemLongClickCallback.onItemLongClick(v, compatPosition(holder.getLayoutPosition()));
+            });
+        }
+        if (mItemLongClickCallback != null || holder instanceof OnHolderLongClickCallback) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mItemLongClickCallback != null)
+                        mItemLongClickCallback.onItemLongClick(v, compatPosition(holder.getLayoutPosition()));
+                    if (holder instanceof OnHolderLongClickCallback)
+                        ((OnHolderLongClickCallback) holder).onItemLongClick(v, compatPosition(holder.getLayoutPosition()));
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
     /**
