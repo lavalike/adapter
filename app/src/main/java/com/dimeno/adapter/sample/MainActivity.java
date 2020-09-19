@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dimeno.adapter.base.RecyclerItem;
 import com.dimeno.adapter.callback.OnItemClickCallback;
 import com.dimeno.adapter.sample.adapter.UserAdapter;
 import com.dimeno.adapter.sample.entity.UserEntity;
@@ -86,6 +87,20 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.addHeader(new HeaderHolder().onCreateView(mRecycler));
         mAdapter.addHeader(new FooterHolder().onCreateView(mRecycler));
         mAdapter.addHeader(new HeaderHolder().onCreateView(mRecycler));
+
+        mAdapter.addFooter(new RecyclerItem() {
+            @Override
+            protected int layout() {
+                return R.layout.item_footer_red_layout;
+            }
+        }.onCreateView(mRecycler));
+        mAdapter.addFooter(new RecyclerItem() {
+            @Override
+            protected int layout() {
+                return R.layout.item_footer_green_layout;
+            }
+        }.onCreateView(mRecycler));
+        mAdapter.addFooter(new FooterHolder().onCreateView(mRecycler));
 
         mRecycler.setAdapter(mAdapter);
     }

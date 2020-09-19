@@ -26,12 +26,14 @@ public abstract class RecyclerItem {
      *
      * @return res id
      */
-    public abstract int layout();
+    protected abstract int layout();
 
     /**
      * handle views here
      *
      * @param itemView item view
      */
-    public abstract void onViewCreated(View itemView);
+    protected void onViewCreated(View itemView) {
+
+    }
 }
