@@ -16,10 +16,12 @@ import java.util.List;
  */
 public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implements OnLoadMoreCallback {
     private static final int VIEW_TYPE_LOAD_MORE = VIEW_TYPE_EMPTY - 1; // -40002
+    private ViewGroup parent;
     private LoadMoreFooter mLoadMoreFooter;
 
     public LoadRecyclerAdapter(List<T> list, ViewGroup parent) {
         super(list);
+        this.parent = parent;
         setLoadMore((mLoadMoreFooter = createLoadMoreFooter()).onCreateView(parent));
     }
 
@@ -36,8 +38,14 @@ public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implemen
     public int getItemCount() {
         int count = getDatas() == null ? 0 : getDatas().size();
         if (count == 0) {
+            // if data is empty, remove load more footer
             if (mFooters.get(VIEW_TYPE_LOAD_MORE) != null) {
                 mFooters.remove(VIEW_TYPE_LOAD_MORE);
+            }
+        } else {
+            // if data is not empty and the load more footer was removed, re-add load more footer here
+            if (mFooters.get(VIEW_TYPE_LOAD_MORE) == null && mLoadMoreFooter != null) {
+                mFooters.put(VIEW_TYPE_LOAD_MORE, mLoadMoreFooter.onCreateView(parent));
             }
         }
         return super.getItemCount();
