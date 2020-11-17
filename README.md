@@ -1,8 +1,8 @@
-# dimeno-adapter
+# adapter
 > RecyclerView.Adapter与ViewHolder封装，支持加载更多
 
 [![Platform](https://img.shields.io/badge/Platform-Android-00CC00.svg?style=flat)](https://www.android.com)
-[![](https://jitpack.io/v/dimeno-tech/dimeno-adapter.svg)](https://jitpack.io/#dimeno-tech/dimeno-adapter)
+[![](https://jitpack.io/v/lavalike/adapter.svg)](https://jitpack.io/#lavalike/adapter)
 
 ### 依赖导入
 
@@ -21,7 +21,7 @@ allprojects {
 
 ``` gradle
 dependencies {
-	implementation 'com.github.dimeno-tech:dimeno-adapter:0.0.9'
+	implementation 'com.github.lavalike:adapter:0.0.1'
 }
 ```
 
