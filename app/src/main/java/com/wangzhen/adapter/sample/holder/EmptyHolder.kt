@@ -2,7 +2,7 @@ package com.wangzhen.adapter.sample.holder
 
 import android.view.View
 import com.wangzhen.adapter.base.RecyclerItem
-import com.wangzhen.adapter.sample.MainActivity
+import com.wangzhen.adapter.sample.LoadMoreActivity
 import com.wangzhen.adapter.sample.R
 
 /**
@@ -16,8 +16,8 @@ class EmptyHolder : RecyclerItem() {
 
     override fun onViewCreated(itemView: View) {
         itemView.findViewById<View>(R.id.btn_retry).setOnClickListener { v ->
-            if (v.context is MainActivity) {
-                (v.context as MainActivity).init()
+            if (v.context is LoadMoreActivity) {
+                (v.context as LoadMoreActivity).bind()
             }
         }
     }

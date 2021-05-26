@@ -26,15 +26,15 @@ class UserAdapter(list: List<UserEntity>, parent: ViewGroup?) : LoadRecyclerAdap
 
     override fun onLoadMore() {
         Handler(Looper.getMainLooper()).postDelayed({
-            if (mDatas.size < 15) {
+            if (mDatas.size < 30) {
                 val list: MutableList<UserEntity> = ArrayList()
-                for (i in 0..0) {
-                    list.add(UserEntity("李四", mDatas.size + 1))
+                for (i in 1..10) {
+                    list.add(UserEntity("李四", mDatas.size + i))
                 }
                 addData(list)
             } else {
                 setState(LoadMoreState.NO_MORE)
             }
-        }, 100)
+        }, 1000)
     }
 }
