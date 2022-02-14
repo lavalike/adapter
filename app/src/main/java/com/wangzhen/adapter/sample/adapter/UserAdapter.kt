@@ -2,6 +2,7 @@ package com.wangzhen.adapter.sample.adapter
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wangzhen.adapter.LoadRecyclerAdapter
@@ -15,7 +16,8 @@ import java.util.*
  * UserAdapter
  * Created by wangzhen on 2020/6/9.
  */
-class UserAdapter(list: List<UserEntity>, parent: ViewGroup?) : LoadRecyclerAdapter<UserEntity>(list, parent) {
+class UserAdapter(list: List<UserEntity>, parent: ViewGroup?) :
+    LoadRecyclerAdapter<UserEntity>(list, parent) {
     override fun createLoadMoreFooter(): LoadMoreFooter {
         return UserLoadMoreFooter(this)
     }
@@ -25,17 +27,15 @@ class UserAdapter(list: List<UserEntity>, parent: ViewGroup?) : LoadRecyclerAdap
     }
 
     override fun onLoadMore() {
+        Log.e("TAG", "-> onLoadMore")
         Handler(Looper.getMainLooper()).postDelayed({
             mDatas?.let { data ->
-                if (data.size < 30) {
-                    val list: MutableList<UserEntity> = ArrayList()
-                    for (i in 1..10) {
-                        list.add(UserEntity("李四", data.size + i))
-                    }
-                    addData(list)
-                } else {
-                    setState(LoadMoreState.NO_MORE)
+                val list: MutableList<UserEntity> = ArrayList()
+                for (i in 1..3) {
+                    list.add(UserEntity("李四", data.size + i))
                 }
+                addData(list)
+                setState(LoadMoreState.NO_MORE)
             }
         }, 1000)
     }

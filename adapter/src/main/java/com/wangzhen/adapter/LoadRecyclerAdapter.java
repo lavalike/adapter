@@ -22,7 +22,7 @@ public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implemen
     public LoadRecyclerAdapter(List<T> list, ViewGroup parent) {
         super(list);
         this.parent = parent;
-        setLoadMore((mLoadMoreFooter = createLoadMoreFooter()).onCreateView(parent));
+        setLoadMoreFooter((mLoadMoreFooter = createLoadMoreFooter()).onCreateView(parent));
     }
 
     /**
@@ -68,7 +68,7 @@ public abstract class LoadRecyclerAdapter<T> extends RecyclerAdapter<T> implemen
      *
      * @param itemView itemView
      */
-    private void setLoadMore(View itemView) {
+    private void setLoadMoreFooter(View itemView) {
         mFooters.put(VIEW_TYPE_LOAD_MORE, itemView);
     }
 

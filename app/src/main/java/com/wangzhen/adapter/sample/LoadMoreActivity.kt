@@ -79,7 +79,7 @@ class LoadMoreActivity : AppCompatActivity() {
 
     fun bind() {
         val list: MutableList<UserEntity> = ArrayList()
-        for (i in 1..10) {
+        for (i in 1..3) {
             list.add(UserEntity("张三", i))
         }
         adapter = UserAdapter(list, recycler).apply {

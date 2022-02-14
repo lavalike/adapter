@@ -11,13 +11,12 @@ import com.wangzhen.adapter.callback.OnLoadMoreCallback;
  * Created by wangzhen on 2020/6/10.
  */
 public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAttachStateChangeListener {
-    private OnLoadMoreCallback mCallback;
-    private int mState = LoadMoreState.READY;
-    private boolean isReady = true;
+    private final OnLoadMoreCallback callback;
+    private int state = LoadMoreState.READY;
     private View itemView;
 
     public LoadMoreFooter(OnLoadMoreCallback callback) {
-        this.mCallback = callback;
+        this.callback = callback;
     }
 
     @Override
@@ -43,7 +42,7 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
 
     @Override
     public void onViewAttachedToWindow(View v) {
-        if (isReady) {
+        if (state == LoadMoreState.READY) {
             loadMore();
         }
     }
@@ -53,8 +52,8 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
      */
     protected void loadMore() {
         setState(LoadMoreState.LOADING);
-        if (mCallback != null) {
-            mCallback.onLoadMore();
+        if (callback != null) {
+            callback.onLoadMore();
         }
     }
 
@@ -64,7 +63,7 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
      * @return state
      */
     public int getState() {
-        return mState;
+        return state;
     }
 
     /**
@@ -73,24 +72,25 @@ public abstract class LoadMoreFooter extends RecyclerItem implements View.OnAtta
      * @param state state
      */
     public void setState(@LoadMoreState int state) {
-        mState = state;
-        isReady = (mState == LoadMoreState.READY);
-        onStateChange(mState);
+        this.state = state;
+        onStateChange(this.state);
     }
 
     /**
      * be ready to load more
      */
     public void setReady() {
-        isReady = true;
+        state = LoadMoreState.READY;
         itemView.removeCallbacks(mRunnable);
         itemView.postDelayed(mRunnable, 500);
     }
 
-    private Runnable mRunnable = new Runnable() {
+    private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            loadMore();
+            if (state == LoadMoreState.READY) {
+                loadMore();
+            }
         }
     };
 
