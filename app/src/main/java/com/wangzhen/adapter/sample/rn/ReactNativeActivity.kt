@@ -66,6 +66,7 @@ class ReactNativeActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         instanceManager.onBackPressed()
     }
 

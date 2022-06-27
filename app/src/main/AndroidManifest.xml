@@ -14,8 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".rn.ReactNativeActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:exported="false"/>
         <activity android:name=".HeaderFooterActivity" />
         <activity android:name=".LoadMoreActivity" />
         <activity
