@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.wangzhen.adapter.sample.databinding.ActivityMainBinding
+import com.wangzhen.adapter.sample.rn.ReactNativeActivity
 
 /**
  * MainActivity
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnLoadMore.setOnClickListener {
             startActivity(Intent(this, LoadMoreActivity::class.java))
+        }
+
+        binding.btnReactNative.setOnClickListener {
+            startActivity(Intent(this, ReactNativeActivity::class.java))
         }
     }
 }

@@ -21,4 +21,11 @@
         android:text="Load More"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_react_native"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="React Native"
+        android:textAllCaps="false" />
+
 </LinearLayout>
